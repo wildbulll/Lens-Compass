@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b4f6c">
+  <title>Lens Compass</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-icon" aria-hidden="true">◉</div>
+    <div>
+      <p class="eyebrow">Associate tool</p>
+      <h1>Lens Compass</h1>
+      <p>Match everyday activities with useful lens conversations.</p>
+    </div>
+  </header>
+
+  <main>
+    <form id="lensForm" class="form-card">
+      <section class="form-section" aria-labelledby="daily-heading">
+        <div class="section-heading">
+          <span class="step">1</span>
+          <div>
+            <h2 id="daily-heading">Daily routine</h2>
+            <p>Choose the answers that best describe the customer.</p>
+          </div>
+        </div>
+
+        <div class="select-grid">
+          <label>Work environment
+            <select id="workEnv" name="workEnv">
+              <option value="">Select an option</option>
+              <option value="office">Office / computer-heavy</option>
+              <option value="retail">Retail / customer-facing</option>
+              <option value="outdoor">Outdoor / sun exposure</option>
+              <option value="driving">Driving / delivery</option>
+              <option value="trades">Trades / industrial</option>
+              <option value="healthcare">Healthcare</option>
+              <option value="student">Student / education</option>
+              <option value="mixed">Other / mixed</option>
+            </select>
+          </label>
+
+          <label>Computer time
+            <select id="computerTime" name="computerTime">
+              <option value="">Select an option</option>
+              <option value="0-2">0–2 hours</option>
+              <option value="3-5">3–5 hours</option>
+              <option value="6-8">6–8 hours</option>
+              <option value="9+">9+ hours</option>
+            </select>
+          </label>
+
+          <label>Phone time
+            <select id="phoneTime" name="phoneTime">
+              <option value="">Select an option</option>
+              <option value="0-2">0–2 hours</option>
+              <option value="3-5">3–5 hours</option>
+              <option value="6-8">6–8 hours</option>
+              <option value="9+">9+ hours</option>
+            </select>
+          </label>
+
+          <label>Daily driving
+            <select id="drivingTime" name="drivingTime">
+              <option value="">Select an option</option>
+              <option value="none">None</option>
+              <option value="lt30">Under 30 minutes</option>
+              <option value="30-60">30–60 minutes</option>
+              <option value="1-2">1–2 hours</option>
+              <option value="2+">More than 2 hours</option>
+            </select>
+          </label>
+
+          <label>Night driving
+            <select id="nightDriving" name="nightDriving">
+              <option value="">Select an option</option>
+              <option value="none">None</option>
+              <option value="rare">Rarely</option>
+              <option value="sometimes">Sometimes</option>
+              <option value="often">Often</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="form-section" aria-labelledby="work-heading">
+        <div class="section-heading">
+          <span class="step">2</span>
+          <div>
+            <h2 id="work-heading">Work tasks</h2>
+            <p>Select all that apply.</p>
+          </div>
+        </div>
+        <div class="choice-grid">
+          <label class="choice"><input type="checkbox" id="taskComputer"><span class="choice-icon">▣</span><span><strong>Computer-heavy</strong><small>Several hours of screen time</small></span></label>
+          <label class="choice"><input type="checkbox" id="taskNearDetail"><span class="choice-icon">⌕</span><span><strong>Detailed near work</strong><small>Reading, crafting or small parts</small></span></label>
+          <label class="choice"><input type="checkbox" id="taskDistanceChanges"><span class="choice-icon">↔</span><span><strong>Frequent distance changes</strong><small>Near, intermediate and distance</small></span></label>
+          <label class="choice"><input type="checkbox" id="taskOutdoor"><span class="choice-icon">☀</span><span><strong>Outdoors / sun</strong><small>Regular UV and glare exposure</small></span></label>
+          <label class="choice"><input type="checkbox" id="taskSafety"><span class="choice-icon">◇</span><span><strong>Safety / impact risk</strong><small>Tools, machinery or flying debris</small></span></label>
+          <label class="choice"><input type="checkbox" id="taskDirty"><span class="choice-icon">✦</span><span><strong>Dusty environment</strong><small>Debris and frequent cleaning</small></span></label>
+        </div>
+      </section>
+
+      <section class="form-section" aria-labelledby="hobby-heading">
+        <div class="section-heading">
+          <span class="step">3</span>
+          <div>
+            <h2 id="hobby-heading">Hobbies and spare time</h2>
+            <p>Select all that apply.</p>
+          </div>
+        </div>
+        <div class="choice-grid">
+          <label class="choice"><input type="checkbox" id="hobOutdoor"><span class="choice-icon">☀</span><span><strong>Outdoor activities</strong><small>Sports, gardening or recreation</small></span></label>
+          <label class="choice"><input type="checkbox" id="hobWaterSnow"><span class="choice-icon">≈</span><span><strong>Water or snow</strong><small>Fishing, boating or skiing</small></span></label>
+          <label class="choice"><input type="checkbox" id="hobReading"><span class="choice-icon">▤</span><span><strong>Reading or crafts</strong><small>Long near-vision sessions</small></span></label>
+          <label class="choice"><input type="checkbox" id="hobDIY"><span class="choice-icon">⚒</span><span><strong>DIY or garage work</strong><small>Hard-use or impact environment</small></span></label>
+          <label class="choice"><input type="checkbox" id="hobScreens"><span class="choice-icon">▻</span><span><strong>Gaming or screens</strong><small>Recreational screen time</small></span></label>
+          <label class="choice"><input type="checkbox" id="hobDrivingTravel"><span class="choice-icon">◇</span><span><strong>Driving or travel</strong><small>Distance focus and changing light</small></span></label>
+        </div>
+      </section>
+
+      <section class="form-section" aria-labelledby="pair-heading">
+        <div class="section-heading">
+          <span class="step">4</span>
+          <div>
+            <h2 id="pair-heading">Second-pair interests</h2>
+            <p>What would make daily life easier?</p>
+          </div>
+        </div>
+        <div class="choice-grid choice-grid--three">
+          <label class="choice"><input type="checkbox" id="spSunglasses"><span class="choice-icon">☀</span><span><strong>Sunglasses</strong><small>Dedicated sun pair</small></span></label>
+          <label class="choice"><input type="checkbox" id="spReaders"><span class="choice-icon">▤</span><span><strong>Reading-only pair</strong><small>Comfort for near tasks</small></span></label>
+          <label class="choice"><input type="checkbox" id="spBackup"><span class="choice-icon">＋</span><span><strong>Backup pair</strong><small>Extra pair for peace of mind</small></span></label>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="primary-button" type="submit">Generate recommendations</button>
+        <button class="secondary-button" type="reset">Start over</button>
+      </div>
+    </form>
+
+    <section id="results" class="results-card" aria-live="polite" aria-labelledby="results-heading" hidden>
+      <div class="results-header">
+        <p class="eyebrow">Conversation guide</p>
+        <h2 id="results-heading">Recommended discussion</h2>
+        <p>Use these suggestions to guide a personalized conversation.</p>
+      </div>
+
+      <div class="result-group">
+        <h3><span aria-hidden="true">◎</span> Primary pair</h3>
+        <div id="primaryResults" class="recommendation-list"></div>
+      </div>
+
+      <div class="result-group">
+        <h3><span aria-hidden="true">＋</span> Second pair</h3>
+        <div id="secondResults" class="recommendation-list"></div>
+      </div>
+
+      <p class="disclaimer">Recommendations are conversation prompts. Final lens choices should reflect the prescription, professional judgment and customer preference.</p>
+    </section>
+  </main>
+</body>
+</html>
