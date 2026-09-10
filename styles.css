@@ -247,3 +247,252 @@ body {
 .primary-button:hover {
   background: var(--brand-dark);
 }
+
+/* Prescription entry */
+
+.rx-section {
+  background: linear-gradient(
+    145deg,
+    #ffffff 55%,
+    #eef6ff
+  );
+}
+
+.rx-table {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.rx-table__header,
+.rx-row {
+  display: grid;
+  grid-template-columns:
+    56px
+    minmax(0, 1fr)
+    minmax(0, 1fr)
+    minmax(90px, 0.65fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+}
+
+.rx-table__header {
+  color: #ffffff;
+  background: var(--brand);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.rx-row + .rx-row {
+  border-top: 1px solid var(--line);
+}
+
+.eye-label {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  color: var(--brand-dark);
+  background: var(--accent);
+}
+
+.signed-field {
+  display: grid;
+  grid-template-columns: auto minmax(70px, 1fr);
+  gap: 7px;
+}
+
+.sign-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.sign-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sign-toggle label {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  min-height: 46px;
+  margin: 0;
+  color: var(--brand);
+  font-size: 1.35rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.sign-toggle label:last-child {
+  border-left: 1px solid var(--line);
+}
+
+.sign-toggle input:checked + label {
+  color: #ffffff;
+  background: var(--brand);
+}
+
+.rx-number {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  background: #ffffff;
+}
+
+.rx-number:focus-visible {
+  border-color: var(--brand);
+  outline: 3px solid rgba(0, 113, 220, 0.25);
+  outline-offset: 1px;
+}
+
+.rx-number:disabled {
+  color: #9aa7b2;
+  background: #edf1f4;
+  cursor: not-allowed;
+}
+
+.rx-followup-grid {
+  display: grid;
+  grid-template-columns: 0.65fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.rx-followup-grid label {
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.rx-followup-grid input {
+  margin-top: 6px;
+}
+
+.rx-unavailable {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  margin-top: 15px;
+  color: var(--ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.rx-unavailable input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--brand);
+}
+
+.rx-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.fit-label {
+  display: inline-block;
+  margin-bottom: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--brand-dark);
+  background: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.recommendation--secondary .fit-label {
+  color: var(--muted);
+  background: #e7edf2;
+}
+
+@media (max-width: 650px) {
+  .rx-table__header {
+    display: none;
+  }
+
+  .rx-row {
+    grid-template-columns: 44px 1fr;
+  }
+
+  .rx-row .eye-label {
+    grid-row: 1 / span 3;
+  }
+
+  .signed-field,
+  .axis-input {
+    grid-column: 2;
+  }
+
+  .rx-followup-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Keep both Rx sign buttons visible */
+
+.signed-field {
+  grid-template-columns: 64px minmax(62px, 1fr);
+  gap: 7px;
+}
+
+.sign-toggle {
+  width: 64px;
+  grid-template-columns: repeat(2, 32px);
+}
+
+.sign-toggle label {
+  width: 32px;
+  min-width: 32px;
+}
+
+.sign-toggle label[for$="Plus"] {
+  grid-column: 1;
+  grid-row: 1;
+  border-left: 0;
+}
+
+.sign-toggle label[for$="Minus"] {
+  grid-column: 2;
+  grid-row: 1;
+  border-left: 1px solid var(--line);
+}
+
+/* Give Rx fields enough room on iPad */
+
+.rx-number {
+  min-width: 0;
+  padding: 0 8px;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.rx-number::-webkit-inner-spin-button,
+.rx-number::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+@media (max-width: 1100px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+
+  .results-card {
+    position: static;
+  }
+}

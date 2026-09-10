@@ -1,7 +1,14 @@
 const form = document.querySelector('#lensForm');
 const resultsSection = document.querySelector('#results');
-const primaryResults = document.querySelector('#primaryResults');
-const secondResults = document.querySelector('#secondResults');
+const multifocalResults = document.querySelector(
+  '#multifocalResults'
+);
+const primaryResults = document.querySelector(
+  '#primaryResults'
+);
+const secondResults = document.querySelector(
+  '#secondResults'
+);
 
 const icons = {
   reflection: '✦',
@@ -22,11 +29,21 @@ function valueOf(id) {
   return document.querySelector(`#${id}`).value;
 }
 
-function addRecommendation(list, title, icon, reason) {
-  const existing = list.find((item) => item.title === title);
+function addRecommendation(
+  list,
+  title,
+  icon,
+  reason
+) {
+  const existing = list.find(
+    (item) => item.title === title
+  );
 
   if (existing) {
-    if (reason && !existing.reasons.includes(reason)) {
+    if (
+      reason &&
+      !existing.reasons.includes(reason)
+    ) {
       existing.reasons.push(reason);
     }
 
@@ -61,7 +78,9 @@ function createRecommendations() {
     ['1-2', '2+'].includes(drivingTime);
 
   const regularNightDriving =
-    ['sometimes', 'often'].includes(nightDriving);
+    ['sometimes', 'often'].includes(
+      nightDriving
+    );
 
   const sunOrGlareActivity =
     workEnv === 'outdoor' ||
@@ -109,7 +128,7 @@ function createRecommendations() {
   if (isChecked('taskDistanceChanges')) {
     addRecommendation(
       primary,
-      'Premium progressive discussion',
+      'Wider-view progressive discussion',
       icons.progressive,
       'May provide a wider, sharper viewing experience across changing distances.'
     );
@@ -134,15 +153,6 @@ function createRecommendations() {
       'Anti-reflective treatment',
       icons.reflection,
       'Helps reduce distracting headlight reflections during night driving.'
-    );
-  }
-
-  if (sunOrGlareActivity) {
-    addRecommendation(
-      primary,
-      'Dedicated sunglasses',
-      icons.sun,
-      'Provides comfort for regular sun and glare exposure.'
     );
   }
 
@@ -173,12 +183,15 @@ function createRecommendations() {
     );
   }
 
-  if (isChecked('spSunglasses') || sunOrGlareActivity) {
+  if (
+    isChecked('spSunglasses') ||
+    sunOrGlareActivity
+  ) {
     addRecommendation(
       second,
       'Sunglasses second pair',
       icons.sun,
-      'Provides dedicated comfort and protection in bright outdoor conditions.'
+      'Provides dedicated comfort in bright outdoor conditions.'
     );
   }
 
@@ -188,11 +201,130 @@ function createRecommendations() {
   };
 }
 
-function renderList(container, recommendations, emptyText) {
+function createMultifocalRecommendations() {
+  const addPower = Number(valueOf('addPower'));
+  const currentLenses = valueOf(
+    'currentLenses'
+  );
+  const lensExperience = valueOf(
+    'lensExperience'
+  );
+
+  if (
+    isChecked('rxUnavailable') ||
+    !addPower
+  ) {
+    return [];
+  }
+
+  let progressiveScore = 0;
+  let bifocalScore = 0;
+
+  const progressiveReasons = [];
+  const bifocalReasons = [];
+
+  const frequentComputerUse =
+    ['6-8', '9+'].includes(
+      valueOf('computerTime')
+    ) ||
+    isChecked('taskComputer');
+
+  if (frequentComputerUse) {
+    progressiveScore += 2;
+
+    progressiveReasons.push(
+      'Intermediate vision matters for frequent computer use.'
+    );
+  }
+
+  if (isChecked('taskDistanceChanges')) {
+    progressiveScore += 2;
+
+    progressiveReasons.push(
+      'The customer regularly changes viewing distance.'
+    );
+  }
+
+  if (
+    currentLenses === 'progressive' &&
+    lensExperience === 'well'
+  ) {
+    progressiveScore += 4;
+
+    progressiveReasons.push(
+      'Their current progressive lenses are working well.'
+    );
+  }
+
+  if (
+    currentLenses === 'bifocal' &&
+    lensExperience === 'well'
+  ) {
+    bifocalScore += 4;
+
+    bifocalReasons.push(
+      'Their current lined bifocals are working well.'
+    );
+  }
+
+  if (
+    isChecked('taskNearDetail') ||
+    isChecked('hobReading')
+  ) {
+    bifocalScore += 1;
+
+    bifocalReasons.push(
+      'A defined near area may support extended close work.'
+    );
+  }
+
+  if (!progressiveReasons.length) {
+    progressiveReasons.push(
+      'Provides near, intermediate and distance viewing without a visible line.'
+    );
+  }
+
+  if (!bifocalReasons.length) {
+    bifocalReasons.push(
+      'Provides clearly separated distance and near viewing areas.'
+    );
+  }
+
+  const progressiveIsBest =
+    progressiveScore >= bifocalScore;
+
+  const recommendations = [
+    {
+      title: 'Progressive lenses',
+      icon: icons.progressive,
+      reasons: progressiveReasons,
+      highlighted: progressiveIsBest
+    },
+    {
+      title: 'Lined bifocal',
+      icon: icons.reading,
+      reasons: bifocalReasons,
+      highlighted: !progressiveIsBest
+    }
+  ];
+
+  return recommendations.sort(
+    (first, second) =>
+      Number(second.highlighted) -
+      Number(first.highlighted)
+  );
+}
+
+function renderList(
+  container,
+  recommendations,
+  emptyText
+) {
   container.replaceChildren();
 
   if (!recommendations.length) {
-    const message = document.createElement('p');
+    const message =
+      document.createElement('p');
 
     message.className = 'empty-message';
     message.textContent = emptyText;
@@ -201,66 +333,179 @@ function renderList(container, recommendations, emptyText) {
     return;
   }
 
-  recommendations.forEach((recommendation) => {
-    const card = document.createElement('article');
-    card.className = 'recommendation';
+  recommendations.forEach(
+    (recommendation) => {
+      const card =
+        document.createElement('article');
 
-    const icon = document.createElement('div');
-    icon.className = 'recommendation-icon';
-    icon.setAttribute('aria-hidden', 'true');
-    icon.textContent = recommendation.icon;
+      card.className = 'recommendation';
 
-    const copy = document.createElement('div');
+      const icon =
+        document.createElement('div');
 
-    const title = document.createElement('h4');
-    title.textContent = recommendation.title;
+      icon.className = 'recommendation-icon';
+      icon.setAttribute(
+        'aria-hidden',
+        'true'
+      );
+      icon.textContent =
+        recommendation.icon;
 
-    const reason = document.createElement('p');
-    reason.textContent = recommendation.reasons.join(' ');
+      const copy =
+        document.createElement('div');
 
-    copy.append(title, reason);
-    card.append(icon, copy);
-    container.append(card);
-  });
+      if (
+        Object.hasOwn(
+          recommendation,
+          'highlighted'
+        )
+      ) {
+        const fitLabel =
+          document.createElement('span');
+
+        fitLabel.className = 'fit-label';
+
+        fitLabel.textContent =
+          recommendation.highlighted
+            ? 'Best lifestyle fit'
+            : 'Also discuss';
+
+        copy.append(fitLabel);
+
+        if (!recommendation.highlighted) {
+          card.classList.add(
+            'recommendation--secondary'
+          );
+        }
+      }
+
+      const title =
+        document.createElement('h4');
+
+      title.textContent =
+        recommendation.title;
+
+      const reason =
+        document.createElement('p');
+
+      reason.textContent =
+        recommendation.reasons.join(' ');
+
+      copy.append(title, reason);
+      card.append(icon, copy);
+      container.append(card);
+    }
+  );
 }
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+form.addEventListener(
+  'submit',
+  (event) => {
+    event.preventDefault();
 
-  const recommendations = createRecommendations();
+    const recommendations =
+      createRecommendations();
 
-  const hasAny =
-    recommendations.primary.length ||
-    recommendations.second.length;
+    const multifocalRecommendations =
+      createMultifocalRecommendations();
 
-  renderList(
-    primaryResults,
-    recommendations.primary,
-    hasAny
-      ? 'No primary-pair recommendation was triggered.'
-      : 'Select additional activities to generate recommendations.'
-  );
+    const hasAny =
+      recommendations.primary.length ||
+      recommendations.second.length ||
+      multifocalRecommendations.length;
 
-  renderList(
-    secondResults,
-    recommendations.second,
-    hasAny
-      ? 'No second-pair recommendation was triggered.'
-      : 'Select additional activities to generate recommendations.'
-  );
+    renderList(
+      multifocalResults,
+      multifocalRecommendations,
+      isChecked('rxUnavailable')
+        ? 'Prescription not available—use the lifestyle recommendations below.'
+        : 'Enter an ADD value to begin a progressive and lined-bifocal conversation.'
+    );
 
-  resultsSection.hidden = false;
+    renderList(
+      primaryResults,
+      recommendations.primary,
+      hasAny
+        ? 'No primary-pair recommendation was triggered.'
+        : 'Select additional activities to generate recommendations.'
+    );
 
-  if (window.matchMedia('(max-width: 900px)').matches) {
-    resultsSection.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    renderList(
+      secondResults,
+      recommendations.second,
+      hasAny
+        ? 'No second-pair recommendation was triggered.'
+        : 'Select additional activities to generate recommendations.'
+    );
+
+    resultsSection.hidden = false;
+
+    if (
+      window.matchMedia(
+        '(max-width: 900px)'
+      ).matches
+    ) {
+      resultsSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   }
-});
+);
 
 form.addEventListener('reset', () => {
   resultsSection.hidden = true;
+
+  multifocalResults.replaceChildren();
   primaryResults.replaceChildren();
   secondResults.replaceChildren();
+
+  document
+    .querySelectorAll(
+      '.rx-section input, .rx-section select'
+    )
+    .forEach((control) => {
+      control.disabled = false;
+    });
+
+  document
+    .querySelectorAll('.axis-input')
+    .forEach((axis) => {
+      axis.disabled = true;
+    });
 });
+
+document
+  .querySelectorAll('.cylinder-input')
+  .forEach((input) => {
+    input.addEventListener('input', () => {
+      const axis =
+        document.querySelector(
+          input.id === 'odCylinder'
+            ? '#odAxis'
+            : '#osAxis'
+        );
+
+      axis.disabled = !Number(input.value);
+
+      if (axis.disabled) {
+        axis.value = '';
+      }
+    });
+  });
+
+document
+  .querySelector('#rxUnavailable')
+  .addEventListener(
+    'change',
+    (event) => {
+      document
+        .querySelectorAll(
+          '.rx-section input:not(#rxUnavailable), .rx-section select'
+        )
+        .forEach((control) => {
+          control.disabled =
+            event.target.checked;
+        });
+    }
+  );

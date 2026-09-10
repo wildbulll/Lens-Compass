@@ -20,9 +20,249 @@
 
   <main>
     <form id="lensForm" class="form-card">
-      <section class="form-section" aria-labelledby="daily-heading">
+
+      <section
+        class="form-section rx-section"
+        aria-labelledby="rx-heading"
+      >
         <div class="section-heading">
           <span class="step">1</span>
+
+          <div>
+            <h2 id="rx-heading">Prescription</h2>
+            <p>
+              Enter the prescription exactly as written. Do not enter
+              customer-identifying information.
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="rx-table"
+          role="group"
+          aria-label="Glasses prescription"
+        >
+          <div class="rx-table__header" aria-hidden="true">
+            <span>Eye</span>
+            <span>Sphere</span>
+            <span>Cylinder</span>
+            <span>Axis</span>
+          </div>
+
+          <!-- RIGHT EYE -->
+          <div class="rx-row">
+            <strong class="eye-label">OD</strong>
+
+            <div class="signed-field">
+              <div class="sign-toggle" aria-label="OD sphere sign">
+                <input
+                  type="radio"
+                  name="odSphereSign"
+                  id="odSphereMinus"
+                  value="-"
+                />
+                <label for="odSphereMinus">−</label>
+
+                <input
+                  type="radio"
+                  name="odSphereSign"
+                  id="odSpherePlus"
+                  value="+"
+                />
+                <label for="odSpherePlus">+</label>
+              </div>
+
+              <input
+                class="rx-number"
+                id="odSphere"
+                type="number"
+                min="0"
+                step="0.25"
+                inputmode="decimal"
+                aria-label="OD sphere value"
+                placeholder="0.00"
+              />
+            </div>
+
+            <div class="signed-field">
+              <div class="sign-toggle" aria-label="OD cylinder sign">
+                <input
+                  type="radio"
+                  name="odCylinderSign"
+                  id="odCylinderMinus"
+                  value="-"
+                />
+                <label for="odCylinderMinus">−</label>
+
+                <input
+                  type="radio"
+                  name="odCylinderSign"
+                  id="odCylinderPlus"
+                  value="+"
+                />
+                <label for="odCylinderPlus">+</label>
+              </div>
+
+              <input
+                class="rx-number cylinder-input"
+                id="odCylinder"
+                type="number"
+                min="0"
+                step="0.25"
+                inputmode="decimal"
+                aria-label="OD cylinder value"
+                placeholder="0.00"
+              />
+            </div>
+
+            <input
+              class="rx-number axis-input"
+              id="odAxis"
+              type="number"
+              min="1"
+              max="180"
+              step="1"
+              inputmode="numeric"
+              aria-label="OD axis"
+              placeholder="001–180"
+              disabled
+            />
+          </div>
+
+          <!-- LEFT EYE -->
+          <div class="rx-row">
+            <strong class="eye-label">OS</strong>
+
+            <div class="signed-field">
+              <div class="sign-toggle" aria-label="OS sphere sign">
+                <input
+                  type="radio"
+                  name="osSphereSign"
+                  id="osSphereMinus"
+                  value="-"
+                />
+                <label for="osSphereMinus">−</label>
+
+                <input
+                  type="radio"
+                  name="osSphereSign"
+                  id="osSpherePlus"
+                  value="+"
+                />
+                <label for="osSpherePlus">+</label>
+              </div>
+
+              <input
+                class="rx-number"
+                id="osSphere"
+                type="number"
+                min="0"
+                step="0.25"
+                inputmode="decimal"
+                aria-label="OS sphere value"
+                placeholder="0.00"
+              />
+            </div>
+
+            <div class="signed-field">
+              <div class="sign-toggle" aria-label="OS cylinder sign">
+                <input
+                  type="radio"
+                  name="osCylinderSign"
+                  id="osCylinderMinus"
+                  value="-"
+                />
+                <label for="osCylinderMinus">−</label>
+
+                <input
+                  type="radio"
+                  name="osCylinderSign"
+                  id="osCylinderPlus"
+                  value="+"
+                />
+                <label for="osCylinderPlus">+</label>
+              </div>
+
+              <input
+                class="rx-number cylinder-input"
+                id="osCylinder"
+                type="number"
+                min="0"
+                step="0.25"
+                inputmode="decimal"
+                aria-label="OS cylinder value"
+                placeholder="0.00"
+              />
+            </div>
+
+            <input
+              class="rx-number axis-input"
+              id="osAxis"
+              type="number"
+              min="1"
+              max="180"
+              step="1"
+              inputmode="numeric"
+              aria-label="OS axis"
+              placeholder="001–180"
+              disabled
+            />
+          </div>
+        </div>
+
+        <div class="rx-followup-grid">
+          <label>
+            ADD
+            <input
+              class="rx-number"
+              id="addPower"
+              type="number"
+              min="0"
+              step="0.25"
+              inputmode="decimal"
+              placeholder="0.00"
+            />
+          </label>
+
+          <label>
+            Current lenses
+            <select id="currentLenses">
+              <option value="">Select an option</option>
+              <option value="single">Single vision</option>
+              <option value="progressive">Progressive</option>
+              <option value="bifocal">Lined bifocal</option>
+              <option value="readers">Reading glasses</option>
+              <option value="none">Nothing</option>
+            </select>
+          </label>
+
+          <label>
+            How are they working?
+            <select id="lensExperience">
+              <option value="">Select an option</option>
+              <option value="well">Works well</option>
+              <option value="difficulty">Some difficulty</option>
+              <option value="change">Wants a change</option>
+              <option value="first">First-time wearer</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="rx-unavailable">
+          <input type="checkbox" id="rxUnavailable" />
+          <span>
+            Prescription not available—continue with lifestyle questions
+          </span>
+        </label>
+
+        <p class="rx-note">
+          The +/− buttons record the prescription as written. They do not
+          transpose cylinder format.
+        </p>
+      </section>
+      <section class="form-section" aria-labelledby="daily-heading">
+        <div class="section-heading">
+          <span class="step">2</span>
           <div>
             <h2 id="daily-heading">Daily routine</h2>
             <p>Choose the answers that best describe the customer.</p>
@@ -89,7 +329,7 @@
 
       <section class="form-section" aria-labelledby="work-heading">
         <div class="section-heading">
-          <span class="step">2</span>
+          <span class="step">3</span>
           <div>
             <h2 id="work-heading">Work tasks</h2>
             <p>Select all that apply.</p>
@@ -107,7 +347,7 @@
 
       <section class="form-section" aria-labelledby="hobby-heading">
         <div class="section-heading">
-          <span class="step">3</span>
+          <span class="step">4</span>
           <div>
             <h2 id="hobby-heading">Hobbies and spare time</h2>
             <p>Select all that apply.</p>
@@ -125,7 +365,7 @@
 
       <section class="form-section" aria-labelledby="pair-heading">
         <div class="section-heading">
-          <span class="step">4</span>
+          <span class="step">5</span>
           <div>
             <h2 id="pair-heading">Second-pair interests</h2>
             <p>What would make daily life easier?</p>
@@ -149,6 +389,18 @@
         <p class="eyebrow">Conversation guide</p>
         <h2 id="results-heading">Recommended discussion</h2>
         <p>Use these suggestions to guide a personalized conversation.</p>
+      </div>
+
+      <div class="result-group">
+        <h3>
+          <span aria-hidden="true">↔</span>
+          Multifocal conversation
+        </h3>
+
+        <div
+          id="multifocalResults"
+          class="recommendation-list"
+        ></div>
       </div>
 
       <div class="result-group">
